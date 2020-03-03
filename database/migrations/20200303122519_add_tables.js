@@ -3,15 +3,16 @@ exports.up = function(knex) {
     .createTable("users", tbl => {
       tbl.increments();
 
-      tbl.timestamp("created_at").defaultTo(knex.fn.now());
-
       tbl
         .string("username", 128)
         .notNullable()
         .unique();
 
       tbl.string("password", 128).notNullable();
+
+      tbl.timestamp("created_at").defaultTo(knex.fn.now());
     })
+
     .createTable("tasks", tbl => {
       tbl.increments();
 
@@ -24,24 +25,14 @@ exports.up = function(knex) {
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
 
-      tbl.string("task-name", 128).notNullable();
-
-      tbl
-        .timestamp("created_at")
-        .defaultTo(knex.fn.now())
-        .notNullable();
-
-      tbl.dateTime("start").notNullable();
-      tbl.dateTime("end").notNullable();
-      tbl
-        .bool("completed")
-        .notNullable()
-        .defaultTo(false);
+      tbl.string("task_name", 128).notNullable();
+      tbl.dateTime('start').notNullable()
+      tbl.dateTime('end').notNullable()
+      tbl.boolean('completed').notNullable().defaultTo(false)
+      tbl.timestamp('created_at').defaultTo(knex.fn.now())
     });
 };
 
 exports.down = function(knex) {
-  return knex.schema
-  .dropTableIfExists("users")
-  .dropTableIfExists("tasks");
+  return knex.schema.dropTableIfExists("users").dropTableIfExists("tasks");
 };
