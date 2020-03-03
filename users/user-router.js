@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Users = require('./user-model.js');
+const restricted = require('../auth/restriction.js');
 
 // User can log in and can create, review, update, and delete data on their own todo list.
 
@@ -15,7 +16,7 @@ router.get('/', (req, res) => {
 });
 
 // Get user by id.
-router.get('/:id', validateUser, (req, res) => {
+router.get('/:id', validateUser, restricted, (req, res) => {
   const id = req.params.id;
   if (!id) {
     res.status(404).json({ message: "The user with the specified id does not exist." });
@@ -31,7 +32,7 @@ router.get('/:id', validateUser, (req, res) => {
 });
 
 // Deletes user account
-router.delete('/:id', validateUser, (req, res) => {
+router.delete('/:id', validateUser, restricted, (req, res) => {
   const id = req.params.id;
   if (!id) {
     res.status(404).json({ message: "The user with the specified ID does not exist." })
