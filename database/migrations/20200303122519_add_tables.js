@@ -1,35 +1,51 @@
 exports.up = function(knex) {
   return knex.schema
-    .createTable("users", tbl => {
+    .createTable("Users", tbl => {
       tbl.increments();
-
       tbl
-        .string("username", 128)
+        .string("username")
         .notNullable()
-        .unique();
-
-      tbl.string("password", 128).notNullable();
-
-      tbl.timestamp("created_at").defaultTo(knex.fn.now());
+        .index();
+      tbl.string("password").notNullable();
     })
 
-    .createTable("tasks", tbl => {
+    .createTable("Todo_List", tbl => {
       tbl.increments();
-
       tbl
-        .integer("user_id")
+        .string("name")
+        .notNullable()
+        .unique()
+        .index();
+      tbl.boolean("completed").defaultTo(false);
+      tbl
+        .integer("User_id")
         .unsigned()
         .notNullable()
         .references("id")
-        .inTable("users")
+        .inTable("Users")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
+    })
 
-      tbl.string("task_name", 128).notNullable();
-      tbl.dateTime('start').notNullable()
-      tbl.dateTime('end').notNullable()
-      tbl.boolean('completed').notNullable().defaultTo(false)
-      tbl.timestamp('created_at').defaultTo(knex.fn.now())
+    .createTable("Tasks", tbl => {
+      tbl.increments();
+      tbl
+        .string("name", 256)
+        .notNullable()
+        .unique()
+        .index();
+      tbl.string("description", 256);
+      tbl.date("start_Date");
+      tbl.date("end_date");
+      tbl.boolean("completed").defaultTo(false);
+      tbl
+        .integer("todo_list_Id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("Todo_List")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
     });
 };
 

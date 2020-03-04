@@ -37,7 +37,7 @@ router.get("/:id", restricted, (req, res) => {
 });
 
 // Deletes user account
-router.delete("/:id", restricted, (req, res) => {
+router.delete("/:id", (req, res) => {
   const id = req.params.id;
   if (!id) {
     res
