@@ -1,63 +1,35 @@
 exports.seed = function(knex) {
-  // Deletes ALL task entries
-  return knex("tasks")
-    .truncate()
+  // Deletes ALL existing entries
+  return knex("Tasks")
+    .del()
     .then(function() {
       // Inserts seed entries
-      return knex("tasks").insert([
+      return knex("Tasks").insert([
         {
-          id: 1,
-          user_id: 1,
-          task_name: "clean up the room",
-          start:"",
-          end: "",
-          completed: false,
-          created_at: ""
+          name: "take out trash",
+          description: "left dumpster",
+          todo_list_Id: 1
+        },
+        { name: "clean dishes", description: "new soap", todo_list_Id: 1 },
+        { name: "walk dog", description: "avoid 7th st", todo_list_Id: 1 },
+        { name: "trash bags", description: "heavy duty", todo_list_Id: 2 },
+        { name: "soap", description: "dawn kind", todo_list_Id: 2 },
+        { name: "dog food", description: "not cheap kind", todo_list_Id: 2 },
+        {
+          name: "fix portal gun",
+          description: "need quantom stuff",
+          todo_list_Id: 3
         },
         {
-          id: 2,
-          user_id: 1,
-          task_name: "make breakfast",
-          start:"",
-          end: "",
-          completed: true,
-          created_at: ""
+          name: "terrorize morty",
+          description: "blow up his love interest",
+          todo_list_Id: 3
         },
+        { name: "help rick", description: "dont die (again)", todo_list_Id: 4 },
         {
-          id: 3,
-          user_id: 2,
-          task_name: "exercise",
-          start:"",
-          end: "",
-          completed: false,
-          created_at: ""
-        },
-        {
-          id: 4,
-          user_id: 2,
-          task_name: "1 hr of code",
-          start:"",
-          end: "",
-          completed: true,
-          created_at: ""
-        },
-        {
-          id: 5,
-          user_id: 3,
-          task_name: "pay bills",
-          start:"",
-          end: "",
-          completed: true,
-          created_at: ""
-        },
-        {
-          id: 6,
-          user_id: 3,
-          task_name: "go out for a walk",
-          start:"",
-          end: "",
-          completed: false,
-          created_at: ""
+          name: "get quantom stuff",
+          description: "please dont die",
+          todo_list_Id: 4
         }
       ]);
     });
