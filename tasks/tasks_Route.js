@@ -1,10 +1,14 @@
 const route = require("express").Router();
+
 const taskDb = require("./tasks_Model");
 
-route.get("/", (req, res) => {
+const restricted = require("../auth/restriction.js")
+//create a new task
+route.get("/", restricted, (req, res) => {
   taskDb
-    .all()
+    .getAll()
     .then(tasks => {
+        console.log(tasks);
       if (tasks.length > 0) {
         res.status(200).json(tasks);
       } else {
@@ -17,10 +21,10 @@ route.get("/", (req, res) => {
     });
 });
 
-route.get("/:id", (req, res) => {
+route.get("/:id", restricted, (req, res) => {
   const id = req.params.id;
   taskDb
-    .findById(id)
+    .getUserTask(id)
     .then(ele => {
       if (ele.length > 0) {
         res.status(200).json(ele);
@@ -31,10 +35,10 @@ route.get("/:id", (req, res) => {
     });
 });
 
-route.post("/add", checkBody, (req, res) => {
+route.post("/add", restricted, (req, res) => {
   const body = req.body;
   taskDb
-    .add(body)
+    .addTask(body)
     .then(ele => {
       res.status(200).json({ Message: "Added Successfully" });
     })
@@ -44,14 +48,14 @@ route.post("/add", checkBody, (req, res) => {
     });
 });
 
-route.post("/:id", checkBody, (req, res) => {
+route.put("/:id", restricted, (req, res) => {
   const id = req.params.id;
   const body = req.body;
 
   taskDb
-    .update(id, body)
+    .updateTask(id, body)
     .then(ele => {
-      res.status(200).json(body);
+      res.status(200).json(ele);
     })
     .catch(err => {
       res.status(500).json({ ERROR: "Could not update" });
@@ -59,10 +63,10 @@ route.post("/:id", checkBody, (req, res) => {
     });
 });
 
-route.delete("/:id", (req, res) => {
+route.delete("/:id", restricted, (req, res) => {
   const id = req.params.id;
   taskDb
-    .del(id)
+    .deleteTask(id)
     .then(ele => {
       if (ele === 1) {
         res.status(200).json({ Message: "Removed succeeded" });
@@ -76,12 +80,3 @@ route.delete("/:id", (req, res) => {
 });
 
 module.exports = route;
-
-function checkBody(req, res, next) {
-  const { name, todo_list_Id } = req.body;
-  if (name && todo_list_Id) {
-    next();
-  } else {
-    res.status(500).json({ ERROR: "You need a name and todo list id" });
-  }
-}

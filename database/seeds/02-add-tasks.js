@@ -1,35 +1,33 @@
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex("Tasks")
+  return knex("tasks")
     .del()
     .then(function() {
       // Inserts seed entries
-      return knex("Tasks").insert([
+      return knex("tasks").insert([
         {
+          id: 1,
           name: "take out trash",
           description: "left dumpster",
-          todo_list_Id: 1
-        },
-        { name: "clean dishes", description: "new soap", todo_list_Id: 1 },
-        { name: "walk dog", description: "avoid 7th st", todo_list_Id: 1 },
-        { name: "trash bags", description: "heavy duty", todo_list_Id: 2 },
-        { name: "soap", description: "dawn kind", todo_list_Id: 2 },
-        { name: "dog food", description: "not cheap kind", todo_list_Id: 2 },
-        {
-          name: "fix portal gun",
-          description: "need quantom stuff",
-          todo_list_Id: 3
+          start_Date: "2020-10-10",
+          end_date: "2020-11-10",
+          completed: false
         },
         {
-          name: "terrorize morty",
-          description: "blow up his love interest",
-          todo_list_Id: 3
+          id: 2,
+          name: "clean room",
+          description: "you will feel better",
+          start_Date: "2020-10-10",
+          end_date: "2020-11-10",
+          completed: true
         },
-        { name: "help rick", description: "dont die (again)", todo_list_Id: 4 },
         {
-          name: "get quantom stuff",
-          description: "please dont die",
-          todo_list_Id: 4
+          id: 3,
+          name: "code",
+          description: "for at least one hour",
+          start_Date: "2020-10-10",
+          end_date: "2020-11-10",
+          completed: false
         }
       ]);
     });

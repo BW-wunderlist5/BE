@@ -7,7 +7,6 @@ const logger = require("../middleware/logger");
 const usersRouter = require("../users/user-router");
 const loginRouter = require("../auth/login-router.js");
 const registerRouter = require("../auth/register-router.js");
-const todoRoute = require("../todo_lists/todo_lists_Route.js");
 const taskRoute = require("../tasks/tasks_Route.js");
 
 
@@ -21,7 +20,6 @@ server.use(cors());
 server.use("/api/login", loginRouter);
 server.use("/api/register", registerRouter);
 server.use("/api/users", usersRouter);
-server.use("/api/todos", todoRoute);
 server.use("/api/tasks", taskRoute)
 
 server.get("/", (req, res) => {
