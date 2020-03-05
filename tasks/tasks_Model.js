@@ -1,33 +1,44 @@
 const db = require("../database/db-config");
 
 module.exports = {
-  all,
-  add,
-  del,
-  update,
-  findById
+  getAll,
+  getUserTask,
+  addTask,
+  getTaskById,
+  updateTask,
+  deleteTask
 };
-
-function all() {
-  return db("Tasks");
+// once user is log in, he/she can create, review, update, and delete data on ther todo list.
+function getAll() {
+  return db("tasks");
 }
 
-function add(body) {
-  return db("Tasks").insert({ ...body });
+function getUserTask(userId) {
+    return db('tasks as e')
+    .join('users as u', "e.user_id", "=", "u.id")
+    .select('e.id', 'e.user_id', 'e.name', 'e.description', 'e.start_Date', 'e.end_date')
+    .where('e.user_id', userId)
 }
 
-function del(id) {
-  return db("Tasks")
+function addTask(data) {
+//   return db("Tasks").insert({ ...body });
+return db("tasks").insert(data);
+}
+
+function getTaskById(id) {
+    return db('tasks')
+    .where("id", id)
+    .first();
+}
+
+function updateTask(id, changes) {
+  return db("tasks")
     .where({ id })
-    .del();
+    .update(changes);
 }
 
-function update(id, body) {
-  return db("Tasks")
-    .where({ id })
-    .update(body);
-}
-
-function findById(id) {
-  return db("Tasks").where({ id });
-}
+function deleteTask(id) {
+    return db("tasks")
+      .where({ id })
+      .delete();
+  }
