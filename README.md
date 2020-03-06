@@ -1,44 +1,12 @@
 # BE
-Staging deployed app: 
+- Staging deployed app: 
 `https://wunderlist5staging.herokuapp.com/`
+- Production deployed app:
+`https://wunderlist5production.herokuapp.com`
+- Postman Documantation:
+`https://web.postman.co/collections/10351597-3f951ea3-dee9-4d51-8514-cf8635b35152?version=latest&workspace=9011c7f0-04ee-4eeb-870a-4240142ec503`
 
-## API Routes
-
-**Login route. POST request**
-- https://wunderlist5production.herokuapp.com/api/login
-
-### Login User
-Both username and password is required. A successful login returns a token. Token expires after one day. After one day, user will have to login again.
-
-### Register User
-**Register user route. POST request**
-- https://wunderlist5production.herokuapp.com/api/register
-
-**__Example:__**
-```javascript
-{
-   "username": "frodo",
-   "password": "ring"
-}
-```
-
-**GET request to get user by id**
-https://wunderlist5production.herokuapp.com/api/users/:id
-
-**__Example:__**
-```javascript
-[
-    {
-        "id": 1,
-        "username": "frodo"
-    }
-]
-```
-**DELETE request to delete user by id**
-https://wunderlist5production.herokuapp.com/api/users/:id
-
-## Database Schema
-### Users
-- id
-- username (Required)
-- password (Required)
+## Server
+- To run the server `npm run server`
+## Test
+- To run test `npm test`
